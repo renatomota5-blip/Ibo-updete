@@ -1,0 +1,1 @@
+Aplicativo IBO PLUS — TV ao vivo, filmes e séries via painel. Gera MAC e CHAVE locais e integra com o painel. Inclui conteúdo local suficiente para evitar rejeição de 'página 16 KB'.

@@ -1,0 +1,15 @@
+
+<resources>
+    <string name="app_name">IBO PLUS</string>
+    <string name="open_site">Abrir site</string>
+    <string name="proceed">PROSSEGUIR</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="tv_live">TV ao Vivo</string>
+    <string name="movies">Filmes</string>
+    <string name="series">Séries</string>
+    <string name="account">conta</string>
+    <string name="servers">Servidores</string>
+    <string name="settings">Configuração</string>
+    <string name="refresh_list">Atualizar lista</string>
+    <string name="exit">Sair</string>
+</resources>
