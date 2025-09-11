@@ -1,9 +1,0 @@
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:padding="24dp"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
-    <TextView android:id="@+id/txtMac" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:text="MAC:"/>
-    <TextView android:id="@+id/txtKey" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_primary" android:text="Key:"/>
-    <TextView android:id="@+id/txtStatus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary" android:text="Status:"/>
-    <TextView android:id="@+id/txtExpiry" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text_secondary" android:text="Expira:"/>
-</LinearLayout>
