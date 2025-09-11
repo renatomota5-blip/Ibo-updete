@@ -1,0 +1,2 @@
+package com.iboplus.app.ui.servers
+class ServersActivity: androidx.appcompat.app.AppCompatActivity(){override fun onCreate(b:android.os.Bundle?){super.onCreate(b);setContentView(com.iboplus.app.R.layout.activity_splash)}}

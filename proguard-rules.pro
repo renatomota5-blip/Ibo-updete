@@ -1,0 +1,3 @@
+-keep class androidx.media3.** { *; }
+-dontwarn okhttp3.**
+-keep class okhttp3.** { *; }
