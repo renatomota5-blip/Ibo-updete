@@ -1,32 +1,33 @@
 package com.iboplus.app.data
 
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.util.concurrent.TimeUnit
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.*
 
-class ApiClient(
-    private val endpoints: PanelEndpoints
-) {
-    private val client = OkHttpClient.Builder()
-        .callTimeout(30, TimeUnit.SECONDS)
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .build()
+/** Cliente Retrofit singleton, dado um baseUrl */
+object ApiClient {
+    @Volatile private var retrofit: Retrofit? = null
 
-    fun ping(): Result<String> = runCatching {
-        val req = Request.Builder()
-            .url(endpoints.ping)
-            .get()
+    fun get(baseUrl: String): Retrofit {
+        val normalized = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
+        val built = Retrofit.Builder()
+            .baseUrl(normalized)
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-        client.newCall(req).execute().use { it.body?.string().orEmpty() }
+        retrofit = built
+        return built
     }
+}
 
-    fun login(user: String, pass: String): Result<String> = runCatching {
-        val json = """{"u":"$user","p":"$pass"}"""
-        val body = json.toRequestBody("application/json".toMediaType())
-        val req = Request.Builder().url(endpoints.login).post(body).build()
-        client.newCall(req).execute().use { it.body?.string().orEmpty() }
-    }
+/** API mínima para compilar (ping e login). Ajuste endpoints se necessário. */
+interface ApiService {
+    @GET("ping")
+    suspend fun ping(): Map<String, Any>
+
+    @FormUrlEncoded
+    @POST("login")
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): Map<String, Any>
 }
