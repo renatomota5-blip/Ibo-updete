@@ -1,22 +1,32 @@
 package com.iboplus.app.data
 
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.concurrent.TimeUnit
 
-object ApiClient {
-    private val client = OkHttpClient.Builder().build()
+class ApiClient(
+    private val endpoints: PanelEndpoints
+) {
+    private val client = OkHttpClient.Builder()
+        .callTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .build()
 
-    fun get(url: String, userAgent: String = defaultUA()): String {
+    fun ping(): Result<String> = runCatching {
         val req = Request.Builder()
-            .url(url)
-            .header("User-Agent", userAgent)
+            .url(endpoints.ping)
+            .get()
             .build()
-
-        client.newCall(req).execute().use { resp ->
-            if (!resp.isSuccessful) error("HTTP " + resp.code)
-            return resp.body?.string() ?: ""
-        }
+        client.newCall(req).execute().use { it.body?.string().orEmpty() }
     }
 
-    fun defaultUA(): String = "IBOPlus/1.0 (Android)"
+    fun login(user: String, pass: String): Result<String> = runCatching {
+        val json = """{"u":"$user","p":"$pass"}"""
+        val body = json.toRequestBody("application/json".toMediaType())
+        val req = Request.Builder().url(endpoints.login).post(body).build()
+        client.newCall(req).execute().use { it.body?.string().orEmpty() }
+    }
 }
