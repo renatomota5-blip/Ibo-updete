@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preferences xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Geral">
+        <SwitchPreferenceCompat
+            android:key="pref_autoplay"
+            android:title="Autoplay"
+            android:defaultValue="true"/>
+        <EditTextPreference
+            android:key="pref_painel_url"
+            android:title="URL do Painel"
+            android:useSimpleSummaryProvider="true"/>
+    </PreferenceCategory>
+</preferences>
