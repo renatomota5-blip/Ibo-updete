@@ -1,21 +1,16 @@
 package com.iboplus.app.data
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class Prefs(ctx: Context) {
-    private val p: SharedPreferences =
-        ctx.getSharedPreferences("iboplus", Context.MODE_PRIVATE)
+    private val sp = ctx.getSharedPreferences("iboplus_prefs", Context.MODE_PRIVATE)
 
-    var mac: String
-        get() = p.getString("mac", "") ?: ""
-        set(v) = p.edit().putString("mac", v).apply()
+    var painelUrl: String?
+        get() = sp.getString("painel_url", null)
+        set(v) = sp.edit { putString("painel_url", v) }
 
-    var key: String
-        get() = p.getString("key", "") ?: ""
-        set(v) = p.edit().putString("key", v).apply()
-
-    var token: String
-        get() = p.getString("token", "") ?: ""
-        set(v) = p.edit().putString("token", v).apply()
+    var deviceId: String?
+        get() = sp.getString("device_id", null)
+        set(v) = sp.edit { putString("device_id", v) }
 }
