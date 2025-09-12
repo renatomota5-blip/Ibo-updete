@@ -22,14 +22,15 @@ jobs:
       - name: Set up Gradle (cache)
         uses: gradle/actions/setup-gradle@v3
 
-      # GERA O WRAPPER A PARTIR DO gradle instalado pelo setup-gradle
+      # Desabilita configuration cache SÓ aqui, para o task :wrapper
       - name: Generate Gradle Wrapper
         run: |
-          gradle wrapper --gradle-version 8.7
+          gradle --no-configuration-cache wrapper --gradle-version 8.7
           chmod +x gradlew
 
+      # Também sem configuration cache por segurança
       - name: Build Debug APK
-        run: ./gradlew :app:assembleDebug
+        run: ./gradlew --no-configuration-cache :app:assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
