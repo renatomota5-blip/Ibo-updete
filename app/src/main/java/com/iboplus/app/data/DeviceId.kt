@@ -1,20 +1,14 @@
 package com.iboplus.app.data
 
-import java.util.Random
+import android.content.Context
+import java.util.UUID
 
 object DeviceId {
-    fun generateMac(): String {
-        val r = Random()
-        val bytes = ByteArray(6)
-        r.nextBytes(bytes)
-        // local-admin (bit 1) + unicast (bit 0)
-        bytes[0] = (bytes[0].toInt() and 0xFE or 0x02).toByte()
-        return bytes.joinToString(":") { String.format("%02X", it) }
-    }
-
-    fun generateKey(): String {
-        val r = Random()
-        val n = r.nextInt(900000) + 100000
-        return n.toString()
+    fun getOrCreate(ctx: Context, prefs: Prefs): String {
+        val current = prefs.deviceId
+        if (!current.isNullOrBlank()) return current
+        val fresh = UUID.randomUUID().toString()
+        prefs.deviceId = fresh
+        return fresh
     }
 }
