@@ -1,2 +1,13 @@
 package com.iboplus.app.ui.servers
-class ServersActivity: androidx.appcompat.app.AppCompatActivity(){override fun onCreate(b:android.os.Bundle?){super.onCreate(b);setContentView(com.iboplus.app.R.layout.activity_splash)}}
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.iboplus.app.R
+
+class ServersActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_simple_placeholder)
+        title = "Servidores"
+    }
+}
