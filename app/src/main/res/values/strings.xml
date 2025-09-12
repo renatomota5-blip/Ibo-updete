@@ -1,1 +1,15 @@
-<resources><string name="app_name">IBO PLUS</string></resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App -->
+    <string name="app_name">IBOPlus</string>
+
+    <!-- Splash / gerais (se quiser) -->
+    <string name="loading">Carregando…</string>
+
+    <!-- Preferências -->
+    <string name="pref_autoplay_title">Reprodução automática</string>
+    <string name="pref_autoplay_summary">Iniciar reprodução automaticamente quando possível</string>
+
+    <string name="pref_panel_url_title">URL do painel</string>
+    <string name="pref_panel_url_summary">Informe a URL do seu painel/servidor</string>
+</resources>
