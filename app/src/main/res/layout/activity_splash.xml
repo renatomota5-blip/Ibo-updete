@@ -8,5 +8,7 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher"/>
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_launcher" />
+
 </FrameLayout>
