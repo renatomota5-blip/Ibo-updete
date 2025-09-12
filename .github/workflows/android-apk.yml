@@ -1,9 +1,9 @@
 name: Android APK
 
 on:
-  workflow_dispatch:   # permite rodar manual
+  workflow_dispatch:
   push:
-    branches: [ "main" ]   # continua rodando no push também
+    branches: [ "main" ]
 
 jobs:
   build-apk:
@@ -19,13 +19,19 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Gradle
-        uses: gradle/gradle-build-action@v3
+      - name: Set up Gradle (cache)
+        uses: gradle/actions/setup-gradle@v3
 
-      - name: Build APK
-        run: ./gradlew assembleDebug
+      # GERA O WRAPPER A PARTIR DO gradle instalado pelo setup-gradle
+      - name: Generate Gradle Wrapper
+        run: |
+          gradle wrapper --gradle-version 8.7
+          chmod +x gradlew
 
-      - name: Upload APK
+      - name: Build Debug APK
+        run: ./gradlew :app:assembleDebug
+
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: IBOPlus-APK
