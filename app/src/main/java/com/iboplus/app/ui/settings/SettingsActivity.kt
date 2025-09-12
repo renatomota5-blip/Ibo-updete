@@ -1,2 +1,21 @@
 package com.iboplus.app.ui.settings
-class SettingsActivity: androidx.appcompat.app.AppCompatActivity(){override fun onCreate(b:android.os.Bundle?){super.onCreate(b);setContentView(com.iboplus.app.R.layout.activity_splash)}}
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceFragmentCompat
+import com.iboplus.app.R
+
+class SettingsActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        supportFragmentManager.beginTransaction()
+            .replace(android.R.id.content, SettingsFragment())
+            .commit()
+    }
+}
+
+class SettingsFragment : PreferenceFragmentCompat() {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        setPreferencesFromResource(R.xml.prefs, rootKey)
+    }
+}
