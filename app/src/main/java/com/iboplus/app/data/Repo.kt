@@ -2,15 +2,13 @@ package com.iboplus.app.data
 
 import android.content.Context
 
-class Repo(private val ctx: Context) {
+class Repo(ctx: Context, painelBaseUrl: String) {
     private val prefs = Prefs(ctx)
+    private val endpoints = PanelEndpoints(painelBaseUrl)
+    private val api = ApiClient(endpoints)
 
-    /** Gera e salva MAC/KEY se ainda não existirem */
-    fun ensureIds() {
-        if (prefs.mac.isBlank()) prefs.mac = DeviceId.generateMac()
-        if (prefs.key.isBlank()) prefs.key = DeviceId.generateKey()
-    }
+    fun savePainel(url: String) { prefs.painelUrl = url }
+    fun getPainel(): String? = prefs.painelUrl
 
-    fun mac(): String = prefs.mac
-    fun key(): String = prefs.key
+    fun checkPing() = api.ping()
 }
