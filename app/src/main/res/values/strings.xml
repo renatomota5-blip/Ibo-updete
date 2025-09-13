@@ -1,15 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App -->
-    <string name="app_name">IBOPlus</string>
+    <!-- Nome da aplicação -->
+    <string name="app_name">IBO Plus</string>
 
-    <!-- Splash / gerais (se quiser) -->
-    <string name="loading">Carregando…</string>
+    <!-- Splash -->
+    <string name="splash_loading">Carregando...</string>
 
-    <!-- Preferências -->
-    <string name="pref_autoplay_title">Reprodução automática</string>
-    <string name="pref_autoplay_summary">Iniciar reprodução automaticamente quando possível</string>
+    <!-- Activation -->
+    <string name="activation_title">Ativação do Aplicativo</string>
+    <string name="activation_mac">MAC</string>
+    <string name="activation_key">Chave</string>
+    <string name="activation_copy">Copiar</string>
+    <string name="activation_open_panel">Abrir site do painel</string>
+    <string name="activation_check_status">Verificar status</string>
+    <string name="activation_already_activated">Já ativei — Entrar no app</string>
+    <string name="activation_instructions">
+        Passe estes dados ao responsável pelo painel para ativação. Você também pode usar o QR configurado no painel.
+    </string>
 
-    <string name="pref_panel_url_title">URL do painel</string>
-    <string name="pref_panel_url_summary">Informe a URL do seu painel/servidor</string>
+    <!-- Home -->
+    <string name="home_title">IBO Plus</string>
+    <string name="home_live_tv">TV ao Vivo</string>
+    <string name="home_movies">Filmes</string>
+    <string name="home_series">Séries</string>
+    <string name="home_account">Conta</string>
+    <string name="home_servers">Servidores / Playlist</string>
+    <string name="home_settings">Configurar</string>
+    <string name="home_refresh">Recarregar Lista</string>
+    <string name="home_exit">Sair do App</string>
+    <string name="home_message_placeholder">Mensagem do painel aparecerá aqui.</string>
+
+    <!-- Geral -->
+    <string name="btn_open">Abrir</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancelar</string>
 </resources>
