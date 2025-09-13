@@ -1,8 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-    <color name="purple_500">#9C27B0</color>
-    <color name="purple_700">#7B1FA2</color>
-    <color name="teal_200">#03DAC5</color>
+    <!-- Paleta de cores principal do IBO Plus -->
+    <color name="primary">#0D6EFD</color>
+    <color name="onPrimary">#FFFFFF</color>
+
+    <color name="secondary">#6C757D</color>
+    <color name="onSecondary">#FFFFFF</color>
+
+    <color name="tertiary">#198754</color>
+    <color name="onTertiary">#FFFFFF</color>
+
+    <color name="background">#0A0A0A</color>
+    <color name="onBackground">#EDEDED</color>
+
+    <color name="surface">#151515</color>
+    <color name="onSurface">#EDEDED</color>
+
+    <color name="surfaceVariant">#1E1E1E</color>
+    <color name="outline">#2B2B2B</color>
+
+    <!-- Destaque (accent color) -->
+    <color name="accent">#FFA500</color>
 </resources>
