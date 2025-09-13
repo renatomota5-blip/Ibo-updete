@@ -1,13 +1,13 @@
-// build.gradle.kts (raiz)
+// build.gradle.kts (raiz do projeto)
 
 plugins {
-    // Plugin para usar Kotlin DSL nos subprojetos
-    id("com.android.application") version "8.4.0" apply false
-    id("com.android.library") version "8.4.0" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.24" apply false
-    id("com.google.dagger.hilt.android") version "2.51" apply false
+    // Plugin do Android e Kotlin serão aplicados no módulo "app"
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.kapt) apply false
+    alias(libs.plugins.hilt) apply false
 }
 
-tasks.register("clean", Delete::class) {
+task<Delete>("clean") {
     delete(rootProject.buildDir)
 }
