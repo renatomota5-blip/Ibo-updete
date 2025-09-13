@@ -48,38 +48,60 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    // Otimizações de build
+    kotlinOptions {
+        jvmTarget = "17"
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-Xjvm-default=all",
+            "-opt-in=kotlin.RequiresOptIn"
+        )
+    }
 }
 
 dependencies {
+    // --- Retrofit / OkHttp
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
 
+    // --- ExoPlayer
     implementation(libs.exoplayer.core)
     implementation(libs.exoplayer.ui)
 
+    // --- Compose
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.material3)
     implementation(libs.compose.ui.tooling)
     implementation(libs.compose.preview)
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
+    // --- AndroidX Core / Lifecycle
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.activity:activity-compose:1.9.0")
-
-    // Hilt
+    // --- Hilt
     implementation("com.google.dagger:hilt-android:${libs.versions.hilt.get()}")
     kapt("com.google.dagger:hilt-android-compiler:${libs.versions.hilt.get()}")
 
+    // --- WorkManager + Hilt (para jobs de atualização de lista, etc.)
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("androidx.hilt:hilt-work:1.2.0")
+    kapt("androidx.hilt:hilt-compiler:1.2.0")
+
+    // --- Timber (logs usados em App.kt)
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // --- Testes
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.compose.ui.test)
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation(libs.compose.ui.tooling)
-    debugImplementation(libs.compose.ui.test.manifest)
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
