@@ -33,4 +33,13 @@
     <string name="btn_open">Abrir</string>
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancelar</string>
+
+    <!-- Controles de player -->
+    <string name="play">Reproduzir</string>
+    <string name="pause">Pausar</string>
+    <string name="stop">Parar</string>
+
+    <!-- Canal de notificação -->
+    <string name="notif_channel_media_name">Reprodução</string>
+    <string name="notif_channel_media_desc">Notificações de reprodução em andamento</string>
 </resources>
