@@ -16,7 +16,8 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            from("androidx:androidx-bom:2024.05.00")
+            // Carrega SOMENTE deste arquivo TOML (uma única vez)
+            from(files("gradle/libs.versions.toml"))
         }
     }
 }
