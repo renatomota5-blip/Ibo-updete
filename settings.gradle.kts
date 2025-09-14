@@ -16,7 +16,6 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            // Carrega SOMENTE deste arquivo TOML (uma única vez)
             from(files("gradle/libs.versions.toml"))
         }
     }
