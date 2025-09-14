@@ -7,27 +7,20 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission
-        android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
-        android:minSdkVersion="34" />
-    <!-- Android 13+ (Tiramisu) notificações opcionais (se viermos a usar) -->
-    <uses-permission
-        android:name="android.permission.POST_NOTIFICATIONS"
-        android:minSdkVersion="33" />
-    <!-- Android 13+ leitura de mídia local (apenas se utilizarmos players/arquivos locais) -->
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_VIDEO"
-        android:minSdkVersion="33" />
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_AUDIO"
-        android:minSdkVersion="33" />
+    <!-- Android 14+ (QPRs) usa tipos de serviço em primeiro plano -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
-    <!-- ===== Compatibilidade TV & Mobile ===== -->
+    <!-- Android 13+ (Tiramisu) - notificações (opcional, para player foreground) -->
+    <uses-permission-sdk-33 android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Android 13+ mídia local (somente se for reproduzir arquivos locais) -->
+    <uses-permission-sdk-33 android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission-sdk-33 android:name="android.permission.READ_MEDIA_AUDIO" />
+
+    <!-- ===== Compatibilidade TV & Mobile (não obrigatórias) ===== -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
     <!-- ===== Visibilidade de pacotes externos (players) ===== -->
-    <!-- Permite checar se VLC / MX Player estão instalados para opção de player externo -->
     <queries>
         <package android:name="org.videolan.vlc" />
         <package android:name="com.mxtech.videoplayer.ad" />
@@ -45,54 +38,41 @@
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+        android:theme="@style/Theme.IboPlus">
 
-        <!-- ===== Activity principal (Home/Navegação) ===== -->
+        <!-- ===== Activity principal ===== -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode"
             android:launchMode="singleTask"
             android:resizeableActivity="true"
-            android:screenOrientation="sensorLandscape"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode"
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <!-- Deixe LEANBACK opcional: só ative se publicar para Android TV -->
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!-- <category android:name="android.intent.category.LEANBACK_LAUNCHER" /> -->
             </intent-filter>
         </activity>
 
-        <!-- ===== Activities de features (declaradas para evitar retrabalho depois) ===== -->
-        <activity android:name=".ui.live.LiveActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
-        <activity android:name=".ui.vod.MoviesActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
-        <activity android:name=".ui.vod.SeriesActivity"
-            android:exported="false"
-            android:screenOrientation="sensorLandscape"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
-        <activity android:name=".ui.account.AccountActivity"
+        <!-- ===== Activities existentes no projeto (evitando referências a não criadas) ===== -->
+        <activity
+            android:name=".ui.live.LiveActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
-        <activity android:name=".ui.servers.ServersActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
-        <activity android:name=".ui.settings.SettingsActivity"
+        <activity
+            android:name=".ui.servers.ServersActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
 
-        <!-- ===== Serviço de reprodução (ExoPlayer Foreground) ===== -->
+        <!-- ===== Serviço de reprodução (Media3/ExoPlayer) ===== -->
         <service
             android:name=".player.MediaPlaybackService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
 
-        <!-- ===== Optional: Media Button Receiver (se usarmos controle por hardware) ===== -->
+        <!-- ===== Media Button Receiver (opcional) ===== -->
         <receiver
             android:name=".player.MediaButtonReceiver"
             android:exported="false">
@@ -101,7 +81,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- ===== (Opcional futuro) FileProvider caso venhamos a compartilhar arquivos ===== -->
+        <!-- ===== (Opcional futuro) FileProvider se precisar compartilhar arquivos ===== -->
         <!--
         <provider
             android:name="androidx.core.content.FileProvider"
