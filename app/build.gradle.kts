@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.hilt)
+    alias(appLibs.plugins.android.application)
+    alias(appLibs.plugins.kotlin.android)
+    alias(appLibs.plugins.kotlin.kapt)
+    alias(appLibs.plugins.hilt)
 }
 
 android {
@@ -49,10 +49,9 @@ android {
         }
     }
 
-    // Otimizações de build
     kotlinOptions {
         jvmTarget = "17"
-        freeCompilerArgs = freeCompilerArgs + listOf(
+        freeCompilerArgs += listOf(
             "-Xjvm-default=all",
             "-opt-in=kotlin.RequiresOptIn"
         )
@@ -60,48 +59,49 @@ android {
 }
 
 dependencies {
+
     // --- Retrofit / OkHttp
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
+    implementation(appLibs.retrofit)
+    implementation(appLibs.converter.gson)
+    implementation(appLibs.okhttp)
+    implementation(appLibs.logging.interceptor)
 
     // --- ExoPlayer
-    implementation(libs.exoplayer.core)
-    implementation(libs.exoplayer.ui)
+    implementation(appLibs.exoplayer.core)
+    implementation(appLibs.exoplayer.ui)
 
     // --- Compose
-    implementation(platform(libs.compose.bom))
-    implementation(libs.compose.ui)
-    implementation(libs.compose.material3)
-    implementation(libs.compose.ui.tooling)
-    implementation(libs.compose.preview)
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation(platform(appLibs.compose.bom))
+    implementation(appLibs.compose.material3)
+    implementation(appLibs.compose.ui)
+    implementation(appLibs.compose.ui.tooling)
+    implementation(appLibs.compose.preview)
+    implementation(appLibs.activity.compose)
+    implementation(appLibs.lifecycle.runtime.ktx)
+    implementation(appLibs.navigation.compose)
 
     // --- AndroidX Core / Lifecycle
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation(libs.lifecycle.runtime.ktx)
-    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(appLibs.core.ktx)
+    implementation(appLibs.lifecycle.viewmodel.ktx)
 
     // --- Hilt
-    implementation("com.google.dagger:hilt-android:${libs.versions.hilt.get()}")
-    kapt("com.google.dagger:hilt-android-compiler:${libs.versions.hilt.get()}")
+    implementation("com.google.dagger:hilt-android:${appLibs.versions.hilt.get()}")
+    kapt("com.google.dagger:hilt-android-compiler:${appLibs.versions.hilt.get()}")
 
-    // --- WorkManager + Hilt (para jobs de atualização de lista, etc.)
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
-    implementation("androidx.hilt:hilt-work:1.2.0")
-    kapt("androidx.hilt:hilt-compiler:1.2.0")
+    // --- WorkManager + Hilt
+    implementation(appLibs.work.runtime.ktx)
+    implementation(appLibs.work.hilt)
+    kapt(appLibs.work.hilt.compiler)
 
     // --- Timber (logs usados em App.kt)
     implementation("com.jakewharton.timber:timber:5.0.1")
 
-    // --- Testes
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-    androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation(libs.compose.ui.tooling)
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    // Tests
+    testImplementation(appLibs.junit)
+    androidTestImplementation(appLibs.androidx.junit)
+    androidTestImplementation(appLibs.espresso.core)
+    androidTestImplementation(platform(appLibs.compose.bom))
+    androidTestImplementation(appLibs.compose.ui.test.junit4)
+    debugImplementation(appLibs.compose.ui.tooling)
+    debugImplementation(appLibs.compose.ui.test.manifest)
 }
