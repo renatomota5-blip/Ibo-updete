@@ -1,4 +1,4 @@
-// settings.gradle.kts
+// settings.gradle.kts — ÚNICO ponto que define o catálogo 'libs'
 
 pluginManagement {
     repositories {
@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
+            // 👇 Apenas UMA chamada 'from'. Não adicione outra.
             from(files("gradle/libs.versions.toml"))
         }
     }
