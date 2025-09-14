@@ -1,13 +1,11 @@
-// build.gradle.kts (raiz do projeto)
-
 plugins {
-    // Plugin do Android e Kotlin serão aplicados no módulo "app"
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.kapt) apply false
-    alias(libs.plugins.hilt) apply false
-}
+    // Android Gradle Plugin
+    id("com.android.application") version "8.4.0" apply false
 
-task<Delete>("clean") {
-    delete(rootProject.buildDir)
+    // Kotlin
+    id("org.jetbrains.kotlin.android") version "1.9.24" apply false
+    id("kotlin-kapt") version "1.9.24" apply false
+
+    // Hilt
+    id("com.google.dagger.hilt.android") version "2.51.1" apply false
 }
