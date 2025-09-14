@@ -12,8 +12,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
+    // >>> Deixe APENAS UM create("libs") com 'from(...)'
     versionCatalogs {
-        // Usa seu catálogo existente
         create("libs") {
             from(files("gradle/libs.versions.toml"))
         }
