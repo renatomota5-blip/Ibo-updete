@@ -1,4 +1,4 @@
-// settings.gradle.kts — ÚNICO ponto que define o catálogo 'libs'
+// settings.gradle.kts — define o catálogo como "appLibs" (evita colisões com "libs")
 
 pluginManagement {
     repositories {
@@ -15,8 +15,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
     versionCatalogs {
-        create("libs") {
-            // 👇 Apenas UMA chamada 'from'. Não adicione outra.
+        create("appLibs") {
             from(files("gradle/libs.versions.toml"))
         }
     }
