@@ -1,3 +1,5 @@
+// settings.gradle.kts
+
 pluginManagement {
     repositories {
         google()
@@ -12,14 +14,12 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
-
-    // >>> Deixe APENAS UM create("libs") com 'from(...)'
     versionCatalogs {
         create("libs") {
-            from(files("gradle/libs.versions.toml"))
+            from("androidx:androidx-bom:2024.05.00")
         }
     }
 }
 
-rootProject.name = "ibo-updete"
+rootProject.name = "IboPlusApp"
 include(":app")
