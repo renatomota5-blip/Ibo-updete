@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.iboplus.app">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- ===== Permissões essenciais ===== -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
+        tools:targetApi="33" />
 
-    <uses-permission-sdk-33 android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission-sdk-33 android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission-sdk-33 android:name="android.permission.READ_MEDIA_AUDIO" />
+    <!-- Android 13+ (Tiramisu) -->
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS"
+        tools:targetApi="33" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
+        tools:targetApi="33" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_AUDIO"
+        tools:targetApi="33" />
 
+    <!-- Compatibilidade TV & Mobile (não obrigatórias) -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
+    <!-- Visibilidade de players externos -->
     <queries>
         <package android:name="org.videolan.vlc" />
         <package android:name="com.mxtech.videoplayer.ad" />
@@ -28,12 +41,13 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:label="IBO Plus"
+        android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IboPlus">
 
+        <!-- Main -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -47,21 +61,23 @@
             </intent-filter>
         </activity>
 
+        <!-- Outras activities já presentes no projeto -->
         <activity
             android:name=".ui.live.LiveActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
-
         <activity
             android:name=".ui.servers.ServersActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
 
+        <!-- Serviço de reprodução -->
         <service
             android:name=".player.MediaPlaybackService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
 
+        <!-- Media Button -->
         <receiver
             android:name=".player.MediaButtonReceiver"
             android:exported="false">
