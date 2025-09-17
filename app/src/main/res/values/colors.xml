@@ -23,4 +23,14 @@
     <color name="md_theme_dark_onSurface">#E6E1E5</color>
     <color name="md_theme_dark_surfaceVariant">#49454F</color>
     <color name="md_theme_dark_outline">#938F99</color>
+
+    <!-- Cores solicitadas pelos erros do build -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Alguns arquivos do launcher/layou trem chamando 'background' -->
+    <color name="background">#FFFFFF</color>
+
+    <!-- Se os adaptive icons usarem essa cor -->
+    <color name="ic_launcher_background">#2B2B2B</color>
 </resources>
