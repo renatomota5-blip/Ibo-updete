@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta base para Material3 -->
+    <!-- Material 3 (claras) -->
     <color name="md3_primary">#6750A4</color>
     <color name="md3_onPrimary">#FFFFFF</color>
     <color name="md3_secondary">#625B71</color>
@@ -12,7 +12,7 @@
     <color name="md3_surfaceVariant">#E7E0EC</color>
     <color name="md3_outline">#79747E</color>
 
-    <!-- Aliases para compatibilidade com referências antigas -->
+    <!-- Aliases para compatibilidade -->
     <color name="colorPrimary">@color/md3_primary</color>
     <color name="colorOnPrimary">@color/md3_onPrimary</color>
     <color name="colorSecondary">@color/md3_secondary</color>
@@ -24,8 +24,11 @@
     <color name="colorSurfaceVariant">@color/md3_surfaceVariant</color>
     <color name="colorOutline">@color/md3_outline</color>
 
-    <!-- Cores pedidas nos erros de ícone/layout -->
+    <!-- Pedidas pelos layouts/ícones -->
     <color name="background">#000000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+
+    <!-- *** COR QUE FALTAVA (corrige o erro) *** -->
+    <color name="ic_launcher_background">#000000</color>
 </resources>
