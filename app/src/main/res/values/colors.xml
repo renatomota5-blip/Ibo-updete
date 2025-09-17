@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="md3_primary">#D0BCFF</color>
-    <color name="md3_onPrimary">#381E72</color>
-    <color name="md3_secondary">#CCC2DC</color>
-    <color name="md3_onSecondary">#332D41</color>
-    <color name="md3_tertiary">#EFB8C8</color>
-    <color name="md3_onTertiary">#492532</color>
-    <color name="md3_surface">#1C1B1F</color>
-    <color name="md3_onSurface">#E6E1E5</color>
-    <color name="md3_surfaceVariant">#49454F</color>
-    <color name="md3_outline">#938F99</color>
+    <!-- Paleta base para Material3 -->
+    <color name="md3_primary">#6750A4</color>
+    <color name="md3_onPrimary">#FFFFFF</color>
+    <color name="md3_secondary">#625B71</color>
+    <color name="md3_onSecondary">#FFFFFF</color>
+    <color name="md3_tertiary">#7D5260</color>
+    <color name="md3_onTertiary">#FFFFFF</color>
+    <color name="md3_surface">#FFFBFE</color>
+    <color name="md3_onSurface">#1C1B1F</color>
+    <color name="md3_surfaceVariant">#E7E0EC</color>
+    <color name="md3_outline">#79747E</color>
 
+    <!-- Aliases para compatibilidade com referências antigas -->
     <color name="colorPrimary">@color/md3_primary</color>
     <color name="colorOnPrimary">@color/md3_onPrimary</color>
     <color name="colorSecondary">@color/md3_secondary</color>
@@ -22,6 +24,7 @@
     <color name="colorSurfaceVariant">@color/md3_surfaceVariant</color>
     <color name="colorOutline">@color/md3_outline</color>
 
+    <!-- Cores pedidas nos erros de ícone/layout -->
     <color name="background">#000000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
