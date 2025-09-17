@@ -1,8 +1,11 @@
+// app/build.gradle.kts — substitua todo o conteúdo por este
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
-    kotlin("kapt") // importante: sem versão aqui
+    // KAPT é configurado via kotlinOptions/kapt abaixo
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
@@ -40,7 +43,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 
     packaging {
@@ -51,7 +54,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
-        freeCompilerArgs = freeCompilerArgs + listOf(
+        freeCompilerArgs += listOf(
             "-Xjvm-default=all",
             "-opt-in=kotlin.RequiresOptIn"
         )
@@ -59,48 +62,44 @@ android {
 }
 
 dependencies {
-    // Retrofit / OkHttp
+    // -------- Retrofit / OkHttp
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
 
-    // ExoPlayer
+    // -------- ExoPlayer
     implementation(libs.exoplayer.core)
     implementation(libs.exoplayer.ui)
 
-    // Compose
+    // -------- Compose (com BOM)
     implementation(platform(libs.compose.bom))
-    implementation(libs.compose.material3)
     implementation(libs.compose.ui)
-    implementation(libs.compose.ui.tooling)
-    implementation(libs.compose.preview)
-    implementation(libs.activity.compose)
-    implementation(libs.navigation.compose)
+    implementation(libs.compose.material3)
+    // tooling (apenas em debug geralmente)
+    debugImplementation(libs.compose.ui.tooling)
+    debugImplementation(libs.compose.ui.tooling.preview)
 
-    // AndroidX / Lifecycle
+    // -------- AndroidX / Lifecycle
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.activity.compose)
+    implementation(libs.navigation.compose)
 
-    // Hilt
-    implementation("com.google.dagger:hilt-android:${libs.versions.hilt.get()}")
-    kapt("com.google.dagger:hilt-compiler:${libs.versions.hilt.get()}")
-
-    // WorkManager + Hilt
-    implementation(libs.work.runtime.ktx)
-    implementation(libs.hilt.work)
+    // -------- Hilt
+    implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    implementation(libs.hilt.work)
 
-    // Logs
-    implementation("com.jakewharton.timber:timber:5.0.1")
+    // -------- WorkManager
+    implementation(libs.work.runtime.ktx)
 
-    // Testes
+    // -------- Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
-    debugImplementation(libs.compose.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 }
