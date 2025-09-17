@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- ===== Permissões essenciais ===== -->
+    <!-- Permissões essenciais -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission
-        android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"
-        tools:targetApi="33" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
-    <!-- Android 13+ (Tiramisu) -->
-    <uses-permission
-        android:name="android.permission.POST_NOTIFICATIONS"
-        tools:targetApi="33" />
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_VIDEO"
-        tools:targetApi="33" />
-    <uses-permission
-        android:name="android.permission.READ_MEDIA_AUDIO"
-        tools:targetApi="33" />
+    <!-- Android 13+ permissões específicas -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
-    <!-- Compatibilidade TV & Mobile (não obrigatórias) -->
+    <!-- Compatibilidade TV & Mobile (opcional) -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
 
@@ -41,13 +31,11 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
+        android:label="IBO Plus"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.IboPlus">
-
-        <!-- Main -->
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
@@ -58,26 +46,25 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!-- <category android:name="android.intent.category.LEANBACK_LAUNCHER" /> -->
             </intent-filter>
         </activity>
 
-        <!-- Outras activities já presentes no projeto -->
         <activity
             android:name=".ui.live.LiveActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
+
         <activity
             android:name=".ui.servers.ServersActivity"
             android:exported="false"
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
 
-        <!-- Serviço de reprodução -->
         <service
             android:name=".player.MediaPlaybackService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
 
-        <!-- Media Button -->
         <receiver
             android:name=".player.MediaButtonReceiver"
             android:exported="false">
@@ -85,6 +72,5 @@
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </receiver>
-
     </application>
 </manifest>
