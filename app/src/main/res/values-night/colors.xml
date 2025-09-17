@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Material 3 (escuras) -->
     <color name="md3_primary">#D0BCFF</color>
     <color name="md3_onPrimary">#381E72</color>
     <color name="md3_secondary">#CCC2DC</color>
@@ -25,4 +26,7 @@
     <color name="background">#000000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+
+    <!-- manter a mesma cor no modo noite -->
+    <color name="ic_launcher_background">#000000</color>
 </resources>
