@@ -1,4 +1,4 @@
-// build.gradle.kts (raiz)
+// build.gradle.kts (raiz do projeto)
 
 plugins {
     id("com.android.application") version "8.4.0" apply false
