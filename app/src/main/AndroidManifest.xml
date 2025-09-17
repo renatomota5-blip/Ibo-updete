@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.iboplus.app">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- ===== Permissões essenciais ===== -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Serviços em primeiro plano -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- Android 14+ (QPRs) usa tipos de serviço em primeiro plano -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
-    <!-- Android 13+ (Tiramisu) - notificações (opcional, para player foreground) -->
-    <uses-permission-sdk-33 android:name="android.permission.POST_NOTIFICATIONS" />
-    <!-- Android 13+ mídia local (somente se for reproduzir arquivos locais) -->
-    <uses-permission-sdk-33 android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission-sdk-33 android:name="android.permission.READ_MEDIA_AUDIO" />
+    <!-- Android 13+ (API 33): usar tools:targetApi em vez de uses-permission-sdk-33 -->
+    <uses-permission
+        android:name="android.permission.POST_NOTIFICATIONS"
+        tools:targetApi="33" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_VIDEO"
+        tools:targetApi="33" />
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_AUDIO"
+        tools:targetApi="33" />
 
     <!-- ===== Compatibilidade TV & Mobile (não obrigatórias) ===== -->
     <uses-feature android:name="android.software.leanback" android:required="false" />
@@ -50,13 +56,13 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <!-- Deixe LEANBACK opcional: só ative se publicar para Android TV -->
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!-- Ative somente se for publicar para Android TV -->
                 <!-- <category android:name="android.intent.category.LEANBACK_LAUNCHER" /> -->
             </intent-filter>
         </activity>
 
-        <!-- ===== Activities existentes no projeto (evitando referências a não criadas) ===== -->
+        <!-- ===== Activities existentes ===== -->
         <activity
             android:name=".ui.live.LiveActivity"
             android:exported="false"
@@ -81,8 +87,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- ===== (Opcional futuro) FileProvider se precisar compartilhar arquivos ===== -->
-        <!--
+        <!-- (Opcional futuro) FileProvider para compartilhar arquivos
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -93,6 +98,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
         -->
-
     </application>
 </manifest>
