@@ -1,23 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta de cores principal do IBO Plus -->
-    <color name="primary">#0D6EFD</color>
-    <color name="onPrimary">#FFFFFF</color>
+    <!-- Light -->
+    <color name="md_theme_light_primary">#6750A4</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_secondary">#625B71</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_tertiary">#7D5260</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_surface">#FFFBFE</color>
+    <color name="md_theme_light_onSurface">#1C1B1F</color>
+    <color name="md_theme_light_surfaceVariant">#E7E0EC</color>
+    <color name="md_theme_light_outline">#79747E</color>
 
-    <color name="secondary">#6C757D</color>
-    <color name="onSecondary">#FFFFFF</color>
-
-    <color name="tertiary">#198754</color>
-    <color name="onTertiary">#FFFFFF</color>
-
-    <color name="background">#0A0A0A</color>
-    <color name="onBackground">#EDEDED</color>
-
-    <color name="surface">#151515</color>
-    <color name="onSurface">#EDEDED</color>
-
-    <color name="surfaceVariant">#1E1E1E</color>
-    <color name="outline">#2B2B2B</color>
-
-    <!-- Destaque (accent color) -->
-    <color name="accent">#FFA500</color>
+    <!-- Dark -->
+    <color name="md_theme_dark_primary">#D0BCFF</color>
+    <color name="md_theme_dark_onPrimary">#371E73</color>
+    <color name="md_theme_dark_secondary">#CCC2DC</color>
+    <color name="md_theme_dark_onSecondary">#332D41</color>
+    <color name="md_theme_dark_tertiary">#EFB8C8</color>
+    <color name="md_theme_dark_onTertiary">#492532</color>
+    <color name="md_theme_dark_surface">#1C1B1F</color>
+    <color name="md_theme_dark_onSurface">#E6E1E5</color>
+    <color name="md_theme_dark_surfaceVariant">#49454F</color>
+    <color name="md_theme_dark_outline">#938F99</color>
 </resources>
