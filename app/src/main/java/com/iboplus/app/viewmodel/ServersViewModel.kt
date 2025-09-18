@@ -1,73 +1,38 @@
-package com.iboplus.app.viewmodel
+package com.iboplus.app.p.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iboplus.app.data.repo.ServersRepository
-import com.iboplus.app.viewmodel.model.ServersUiState
-import com.iboplus.app.viewmodel.model.ServerItemUi
-import com.iboplus.app.viewmodel.model.QrUi
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.iboplus.app.p.viewmodel.model.ServerItem
+import com.iboplus.app.p.viewmodel.model.ServersUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 /**
- * ViewModel para a tela de Servidores / Playlist.
- * - Carrega listas e QR
- * - Permite conectar/desconectar
+ * ViewModel simples para a tela de servidores.
+ * Usa viewModelScope (Lifecycle KTX) e StateFlow.
  */
-@HiltViewModel
-class ServersViewModel @Inject constructor(
-    private val repo: ServersRepository
-) : ViewModel() {
+class ServersViewModel : ViewModel() {
 
     private val _state = MutableStateFlow(ServersUiState())
     val state: StateFlow<ServersUiState> = _state
 
-    fun load() {
+    fun loadServers() {
+        _state.value = _state.value.copy(isLoading = true, error = null)
+
         viewModelScope.launch {
-            _state.value = _state.value.copy(loading = true, error = null)
-            runCatching {
-                repo.getServers() to repo.getQr()
-            }.onSuccess { (servers, qr) ->
-                _state.value = _state.value.copy(
-                    loading = false,
-                    items = servers,
-                    qr = qr,
-                    mac = repo.getMac(),
-                    deviceKey = repo.getDeviceKey(),
-                    statusText = repo.getStatusText()
+            try {
+                // TODO: troque pela sua fonte real (repo/DB/rede)
+                val data = listOf(
+                    ServerItem(id = "1", name = "Servidor Padrão", url = "https://example.com")
                 )
-            }.onFailure {
+                _state.value = _state.value.copy(isLoading = false, items = data)
+            } catch (t: Throwable) {
                 _state.value = _state.value.copy(
-                    loading = false,
-                    error = it.message ?: "Erro ao carregar servidores"
+                    isLoading = false,
+                    error = t.message ?: "Erro desconhecido"
                 )
             }
         }
-    }
-
-    fun connect(id: String, onResult: (Boolean) -> Unit) {
-        viewModelScope.launch {
-            val result = runCatching { repo.connect(id) }
-            onResult(result.isSuccess)
-            if (result.isSuccess) {
-                load()
-            } else {
-                _state.value = _state.value.copy(error = result.exceptionOrNull()?.message)
-            }
-        }
-    }
-
-    fun disconnect() {
-        viewModelScope.launch {
-            runCatching { repo.disconnect() }
-            load()
-        }
-    }
-
-    fun reloadFromPanel() {
-        load()
     }
 }
