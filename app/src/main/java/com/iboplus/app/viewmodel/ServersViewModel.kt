@@ -1,17 +1,13 @@
-package com.iboplus.app.p.viewmodel
+package com.iboplus.app.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iboplus.app.p.viewmodel.model.ServerItem
-import com.iboplus.app.p.viewmodel.model.ServersUiState
+import com.iboplus.app.viewmodel.model.ServerItem
+import com.iboplus.app.viewmodel.model.ServersUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel simples para a tela de servidores.
- * Usa viewModelScope (Lifecycle KTX) e StateFlow.
- */
 class ServersViewModel : ViewModel() {
 
     private val _state = MutableStateFlow(ServersUiState())
