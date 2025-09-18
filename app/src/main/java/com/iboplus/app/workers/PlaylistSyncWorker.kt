@@ -2,15 +2,10 @@ package com.iboplus.app.workers
 
 import android.content.Context
 import androidx.work.CoroutineWorker
-import androidx.work.WorkerParameters
 import androidx.work.Data
 import androidx.work.Result
+import androidx.work.WorkerParameters
 
-/**
- * Worker simples para sincronizar playlists.
- * Removido AssistedInject/Hilt para evitar dependências faltando.
- * Use OneTimeWorkRequestBuilder<PlaylistSyncWorker>() para enfileirar.
- */
 class PlaylistSyncWorker(
     appContext: Context,
     params: WorkerParameters
@@ -18,25 +13,19 @@ class PlaylistSyncWorker(
 
     override suspend fun doWork(): Result {
         return try {
-            // Exemplo: ler parâmetros de entrada, se houver
             val playlistUrl = inputData.getString(KEY_PLAYLIST_URL)
 
-            // TODO: implemente aqui a sincronização real (rede/DB).
-            // Coloquei um "no-op" para compilar sem erros.
+            // TODO: implemente sua sincronização real (rede/BD).
             if (playlistUrl.isNullOrBlank()) {
-                // Sem dados? Ok, executa com sucesso mesmo assim.
                 Result.success()
             } else {
-                // Simule trabalho
-                // syncPlaylist(playlistUrl)
                 Result.success(
                     Data.Builder()
                         .putString(KEY_RESULT, "synced:$playlistUrl")
                         .build()
                 )
             }
-        } catch (t: Throwable) {
-            // Se for erro temporário, podemos tentar novamente
+        } catch (_: Throwable) {
             Result.retry()
         }
     }
