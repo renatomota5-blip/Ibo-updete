@@ -26,10 +26,7 @@ data class LiveChannelUi(
 data class LiveUiState(
     val loading: Boolean = false,
     val error: String? = null,
-
     val categories: List<LiveCategoryUi> = emptyList(),
     val selectedCategoryId: String? = null,
-
-    // lista já filtrada por categoria/busca
     val channels: List<LiveChannelUi> = emptyList()
 )
