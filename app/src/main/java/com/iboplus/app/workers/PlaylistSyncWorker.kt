@@ -14,8 +14,6 @@ class PlaylistSyncWorker(
     override suspend fun doWork(): ListenableWorker.Result {
         return try {
             val playlistUrl = inputData.getString(KEY_PLAYLIST_URL)
-
-            // TODO: implemente sua sincronização real (rede/BD).
             if (playlistUrl.isNullOrBlank()) {
                 ListenableWorker.Result.success()
             } else {
