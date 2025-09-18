@@ -30,6 +30,6 @@ data class LiveUiState(
     val categories: List<LiveCategoryUi> = emptyList(),
     val selectedCategoryId: String? = null,
 
-    val channels: List<LiveChannelUi> = emptyList() // lista já filtrada por categoria/busca
+    // lista já filtrada por categoria/busca
+    val channels: List<LiveChannelUi> = emptyList()
 )
-```0
