@@ -3,8 +3,6 @@ package com.iboplus.app.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iboplus.app.data.repo.LiveRepository
-import com.iboplus.app.viewmodel.model.LiveCategoryUi
-import com.iboplus.app.viewmodel.model.LiveChannelUi
 import com.iboplus.app.viewmodel.model.LiveUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -37,10 +35,10 @@ class LiveViewModel @Inject constructor(
                     categories = cats,
                     channels = chans
                 )
-            }.onFailure {
+            }.onFailure { e ->
                 _state.value = _state.value.copy(
                     loading = false,
-                    error = it.message ?: "Erro desconhecido"
+                    error = e.message ?: "Erro desconhecido"
                 )
             }
         }
