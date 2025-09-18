@@ -2,69 +2,58 @@ package com.iboplus.app.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.iboplus.app.data.repo.SeriesRepository
-import com.iboplus.app.viewmodel.model.SeriesCategoryUi
-import com.iboplus.app.viewmodel.model.SeriesUi
-import com.iboplus.app.viewmodel.model.SeriesUiState
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.iboplus.app.viewmodel.model.QrUi
+import com.iboplus.app.viewmodel.model.ServerItemUi
+import com.iboplus.app.viewmodel.model.ServersUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel para a tela de Séries.
- * - Carrega categorias e séries
- * - Permite busca e filtro
- */
-@HiltViewModel
-class SeriesViewModel @Inject constructor(
-    private val repo: SeriesRepository
-) : ViewModel() {
+class ServersViewModel : ViewModel() {
 
-    private val _state = MutableStateFlow(SeriesUiState())
-    val state: StateFlow<SeriesUiState> = _state
+    private val _state = MutableStateFlow(ServersUiState())
+    val state: StateFlow<ServersUiState> = _state
 
-    fun load() {
+    /** Exemplo de carga inicial (troque pela sua fonte real). */
+    fun loadServers() {
+        _state.value = _state.value.copy(loading = true, error = null)
+
         viewModelScope.launch {
-            _state.value = _state.value.copy(loading = true, error = null)
-            runCatching {
-                repo.getCategories() to repo.getSeries()
-            }.onSuccess { (cats, series) ->
-                _state.value = _state.value.copy(
-                    loading = false,
-                    categories = cats,
-                    items = series
+            try {
+                val items = listOf(
+                    ServerItemUi(
+                        id = "1",
+                        title = "Servidor Padrão",
+                        subtitle = "https://example.com",
+                        connected = false
+                    )
                 )
-            }.onFailure {
                 _state.value = _state.value.copy(
                     loading = false,
-                    error = it.message ?: "Erro desconhecido"
+                    items = items,
+                    statusText = "${items.size} servidor(es) encontrado(s)"
+                )
+            } catch (t: Throwable) {
+                _state.value = _state.value.copy(
+                    loading = false,
+                    error = t.message ?: "Erro desconhecido"
                 )
             }
         }
     }
 
-    fun search(query: String) {
-        viewModelScope.launch {
-            val all = repo.getSeries()
-            val filtered = if (query.isBlank()) all else {
-                all.filter { it.title.contains(query, ignoreCase = true) }
-            }
-            _state.value = _state.value.copy(items = filtered)
-        }
+    fun setQr(qr: QrUi?) {
+        _state.value = _state.value.copy(qr = qr)
     }
 
-    fun selectCategory(id: String?) {
-        viewModelScope.launch {
-            val all = repo.getSeries()
-            val filtered = if (id.isNullOrBlank() || id == "all") all else {
-                all.filter { it.id.startsWith(id) || it.title.contains(id, ignoreCase = true) }
-            }
-            _state.value = _state.value.copy(
-                selectedCategoryId = id,
-                items = filtered
-            )
+    fun setConnectionState(id: String, connected: Boolean) {
+        val updated = _state.value.items.map {
+            if (it.id == id) it.copy(connected = connected) else it
         }
+        _state.value = _state.value.copy(items = updated)
+    }
+
+    fun setMacAndDeviceKey(mac: String, deviceKey: String) {
+        _state.value = _state.value.copy(mac = mac, deviceKey = deviceKey)
     }
 }
