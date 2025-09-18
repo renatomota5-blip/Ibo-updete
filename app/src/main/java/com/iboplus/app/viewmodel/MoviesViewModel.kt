@@ -3,8 +3,6 @@ package com.iboplus.app.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.iboplus.app.data.repo.MoviesRepository
-import com.iboplus.app.viewmodel.model.MovieCategoryUi
-import com.iboplus.app.viewmodel.model.MovieUi
 import com.iboplus.app.viewmodel.model.MoviesUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -36,10 +34,10 @@ class MoviesViewModel @Inject constructor(
                     categories = cats,
                     items = movies
                 )
-            }.onFailure {
+            }.onFailure { e ->
                 _state.value = _state.value.copy(
                     loading = false,
-                    error = it.message ?: "Erro desconhecido"
+                    error = e.message ?: "Erro desconhecido"
                 )
             }
         }
