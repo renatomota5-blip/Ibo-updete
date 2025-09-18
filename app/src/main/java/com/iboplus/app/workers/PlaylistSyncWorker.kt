@@ -3,7 +3,7 @@ package com.iboplus.app.workers
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.Data
-import androidx.work.Result
+import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 
 class PlaylistSyncWorker(
@@ -11,22 +11,21 @@ class PlaylistSyncWorker(
     params: WorkerParameters
 ) : CoroutineWorker(appContext, params) {
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): ListenableWorker.Result {
         return try {
             val playlistUrl = inputData.getString(KEY_PLAYLIST_URL)
 
             // TODO: implemente sua sincronização real (rede/BD).
             if (playlistUrl.isNullOrBlank()) {
-                Result.success()
+                ListenableWorker.Result.success()
             } else {
-                Result.success(
-                    Data.Builder()
-                        .putString(KEY_RESULT, "synced:$playlistUrl")
-                        .build()
-                )
+                val output = Data.Builder()
+                    .putString(KEY_RESULT, "synced:$playlistUrl")
+                    .build()
+                ListenableWorker.Result.success(output)
             }
         } catch (_: Throwable) {
-            Result.retry()
+            ListenableWorker.Result.retry()
         }
     }
 
