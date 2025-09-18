@@ -1,14 +1,17 @@
 package com.iboplus.app.ui.screens
 
-import android.os.Handler
-import android.os.Looper
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,12 +23,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.iboplus.app.R
 import com.iboplus.app.ui.navigation.Routes
+import kotlinx.coroutines.delay
 
 /**
  * SplashScreen
- * - Exibe logo configurada pelo painel
- * - Mostra fundo (cor/imagem) também configurado pelo painel
- * - Após timeout ou validação do app, navega para Activation ou Home
+ * - Mostra logo e fundo
+ * - Após timeout navega para Activation ou Home
  */
 @Composable
 fun SplashScreen(navController: NavController) {
@@ -33,13 +36,12 @@ fun SplashScreen(navController: NavController) {
 
     // Simula carregamento inicial (logo, fundo, configs, status de ativação)
     LaunchedEffect(Unit) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            ready = true
-        }, 2500) // 2.5s de splash
+        delay(2500) // 2.5s
+        ready = true
     }
 
     if (ready) {
-        // TODO: substituir por checagem real no painel via API getappuser.php
+        // TODO: substituir por checagem real via API
         val isActivated = false
         if (isActivated) {
             navController.navigate(Routes.HOME) {
@@ -62,7 +64,7 @@ fun SplashScreen(navController: NavController) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             // Logo
             Image(
-                painter = painterResource(id = R.mipmap.ic_launcher), // depois trocar por logo do painel
+                painter = painterResource(id = R.mipmap.ic_launcher),
                 contentDescription = "Logo",
                 modifier = Modifier
                     .size(160.dp)
@@ -81,5 +83,9 @@ fun SplashScreen(navController: NavController) {
 
             // Indicador de progresso
             CircularProgressIndicator(
-                color = MaterialTheme.colorScheme.primary,
-                strokeWidth =
+                modifier = Modifier.size(36.dp),
+                strokeWidth = 4.dp
+            )
+        }
+    }
+}
