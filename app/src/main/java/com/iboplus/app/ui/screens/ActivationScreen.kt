@@ -13,38 +13,21 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.iboplus.app.ui.navigation.Routes
 import java.security.MessageDigest
 import kotlin.math.abs
 
-/**
- * ActivationScreen
- *
- * - Exibe MAC (12 caracteres) e CHAVE (6 dígitos) gerados no dispositivo
- * - Mostra instruções para ativação via painel (QR/website)
- * - Botões úteis: Copiar MAC / Copiar CHAVE / Abrir site do painel / Recarregar / Já ativei
- *
- * Observação:
- *  - O QR é definido pelo painel (endpoint `qr.php`). Podemos exibir a imagem do QR
- *    futuramente via carregamento remoto (ex.: Coil) quando integrarmos a camada de rede.
- */
 @Composable
-fun ActivationScreen(navController: NavController) {
-    val context = LocalContext.current
+fun ActivationScreen() {
+    val context = androidx.compose.ui.platform.LocalContext.current
 
-    // Geração determinística baseada no ANDROID_ID (estável por dispositivo/restauração)
     val mac by remember { mutableStateOf(generateMac(context)) }
     val deviceKey by remember { mutableStateOf(generateDeviceKey(context)) }
 
-    // URL base do painel (poderá vir de setting.json)
     val panelBaseUrl = remember { "https://iboplus.motanetplay.top" }
 
-    // Placeholder de status (depois troca por chamada real ao getappuser.php)
     var checking by remember { mutableStateOf(false) }
     var checkResult by remember { mutableStateOf<String?>(null) }
 
@@ -62,7 +45,6 @@ fun ActivationScreen(navController: NavController) {
                 style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
             )
 
-            // Cartão com MAC e CHAVE
             OutlinedCard(
                 shape = RoundedCornerShape(16.dp),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
@@ -90,7 +72,6 @@ fun ActivationScreen(navController: NavController) {
                 }
             }
 
-            // Ações principais
             Row(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.fillMaxWidth()
@@ -103,10 +84,7 @@ fun ActivationScreen(navController: NavController) {
                 }
                 OutlinedButton(
                     onClick = {
-                        // Placeholder de verificação: aqui iremos consultar getappuser.php
                         checking = true
-                        // Simulação rápida (substituir por chamada real via Retrofit)
-                        // Ex.: UserRepo.checkActivation(mac, deviceKey)
                         checkResult = "Ativação pendente no painel"
                         checking = false
                     },
@@ -116,12 +94,10 @@ fun ActivationScreen(navController: NavController) {
                 }
             }
 
-            // Resultado da verificação (placeholder)
-            if (!checkResult.isNullOrBlank()) {
-                AssistiveCard(message = checkResult!!)
+            checkResult?.takeIf { it.isNotBlank() }?.let {
+                AssistiveCard(message = it)
             }
 
-            // QR placeholder / instruções
             OutlinedCard(
                 shape = RoundedCornerShape(16.dp),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
@@ -137,7 +113,7 @@ fun ActivationScreen(navController: NavController) {
                     )
                     Text(
                         "O QR é configurado no painel e aparece quando o app está sem lista ou inativo. " +
-                            "Nesta tela, vamos exibir a imagem recebida de `${panelBaseUrl}/api/qr.php` assim que integrarmos a camada de rede.",
+                            "Nesta tela, vamos exibir a imagem recebida do painel assim que integrarmos a camada de rede.",
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -145,14 +121,8 @@ fun ActivationScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // CTA para quando o usuário já foi ativado no painel
             Button(
-                onClick = {
-                    // Depois de ativado no painel, navegar para Home
-                    navController.navigate(Routes.HOME) {
-                        popUpTo(Routes.ACTIVATION) { inclusive = true }
-                    }
-                },
+                onClick = { /* navegação para Home quando ativado */ },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Já ativei — Entrar no app")
@@ -203,23 +173,15 @@ private fun AssistiveCard(message: String) {
     }
 }
 
-/* --------------------------- Business Helpers -------------------------- */
+/* --------------------------- Helpers -------------------------- */
 
-/**
- * Gera um MAC de 12 caracteres (A-F,0-9) em maiúsculas, a partir do ANDROID_ID.
- * Observação: não é um MAC real de interface de rede; é um identificador do app.
- */
 private fun generateMac(context: Context): String {
     val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
         ?: "iboplus"
     val md5 = md5(androidId)
-    // 12 primeiros caracteres hex
     return md5.take(12).uppercase()
 }
 
-/**
- * Gera uma chave de 6 dígitos a partir do ANDROID_ID (determinística).
- */
 private fun generateDeviceKey(context: Context): String {
     val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
         ?: System.currentTimeMillis().toString()
@@ -233,8 +195,6 @@ private fun md5(input: String): String {
     val bytes = md.digest(input.toByteArray())
     return bytes.joinToString("") { "%02x".format(it) }
 }
-
-/* ------------------------------ Intents -------------------------------- */
 
 private fun openUrl(context: Context, url: String) {
     runCatching {
