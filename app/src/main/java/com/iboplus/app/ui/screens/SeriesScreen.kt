@@ -7,7 +7,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -19,13 +25,6 @@ import com.iboplus.app.viewmodel.SeriesViewModel
 import com.iboplus.app.viewmodel.model.SeriesCategoryUi
 import com.iboplus.app.viewmodel.model.SeriesUi
 
-/**
- * Tela de SÉRIES
- * - Categorias (chips)
- * - Busca
- * - Grid de posters
- * - Clique abre detalhes/canais da série via callback
- */
 @Composable
 fun SeriesScreen(
     vm: SeriesViewModel,
@@ -47,7 +46,6 @@ fun SeriesScreen(
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
         )
 
-        // Busca
         OutlinedTextField(
             value = query,
             onValueChange = {
@@ -84,7 +82,7 @@ fun SeriesScreen(
     }
 }
 
-/* ---------------- Components (reuso básico da tela de filmes) ---------------- */
+/* ---------------- Components ---------------- */
 
 @Composable
 private fun LoadingBox() {
@@ -197,4 +195,3 @@ private fun ErrorBox(message: String, onRetry: () -> Unit) {
         Button(onClick = onRetry) { Text("Tentar novamente") }
     }
 }
-```0
