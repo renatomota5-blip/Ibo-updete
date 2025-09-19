@@ -7,7 +7,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -15,23 +21,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.iboplus.app.viewmodel.MoviesViewModel
-import com.iboplus.app.viewmodel.model.MovieCategoryUi
-import com.iboplus.app.viewmodel.model.MovieUi
+import com.iboplus.app.viewmodel.SeriesViewModel
+import com.iboplus.app.viewmodel.model.SeriesCategoryUi
+import com.iboplus.app.viewmodel.model.SeriesUi
 
-/**
- * Tela de FILMES
- * - Lista categorias (drawer horizontal simples)
- * - Busca por título
- * - Grid de pôsteres
- * - Ao clicar em um item -> onOpen(movie)
- *
- * ViewModel esperado: MoviesViewModel (Hilt).
- */
 @Composable
-fun MoviesScreen(
-    vm: MoviesViewModel,
-    onOpen: (MovieUi) -> Unit
+fun SeriesScreen(
+    vm: SeriesViewModel,
+    onOpen: (SeriesUi) -> Unit
 ) {
     val ui by vm.state.collectAsState()
     var query by remember { mutableStateOf("") }
@@ -45,11 +42,10 @@ fun MoviesScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = "Filmes",
+            text = "Séries",
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
         )
 
-        // Busca
         OutlinedTextField(
             value = query,
             onValueChange = {
@@ -58,28 +54,26 @@ fun MoviesScreen(
             },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("procurar filme...") }
+            placeholder = { Text("procurar série...") }
         )
 
         when {
             ui.loading -> LoadingBox()
 
             ui.error != null -> ErrorBox(
-                message = ui.error ?: "Erro ao carregar filmes",
+                message = ui.error ?: "Erro ao carregar séries",
                 onRetry = { vm.load() }
             )
 
             else -> {
-                // Categorias (scroll horizontal)
                 CategoryRow(
                     categories = ui.categories,
                     selected = ui.selectedCategoryId,
                     onClick = { id -> vm.selectCategory(id) }
                 )
 
-                // Grid de filmes
-                MovieGrid(
-                    movies = ui.items,
+                SeriesGrid(
+                    items = ui.items,
                     onClick = onOpen,
                     modifier = Modifier.weight(1f)
                 )
@@ -99,7 +93,7 @@ private fun LoadingBox() {
 
 @Composable
 private fun CategoryRow(
-    categories: List<MovieCategoryUi>,
+    categories: List<SeriesCategoryUi>,
     selected: String?,
     onClick: (String) -> Unit
 ) {
@@ -113,7 +107,8 @@ private fun CategoryRow(
             colors = if (selected == null || selected == "all")
                 AssistChipDefaults.assistChipColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer
-                ) else AssistChipDefaults.assistChipColors()
+                )
+            else AssistChipDefaults.assistChipColors()
         )
         categories.forEach { cat ->
             AssistChip(
@@ -122,16 +117,17 @@ private fun CategoryRow(
                 colors = if (selected == cat.id)
                     AssistChipDefaults.assistChipColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ) else AssistChipDefaults.assistChipColors()
+                    )
+                else AssistChipDefaults.assistChipColors()
             )
         }
     }
 }
 
 @Composable
-private fun MovieGrid(
-    movies: List<MovieUi>,
-    onClick: (MovieUi) -> Unit,
+private fun SeriesGrid(
+    items: List<SeriesUi>,
+    onClick: (SeriesUi) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -140,15 +136,15 @@ private fun MovieGrid(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         modifier = modifier.fillMaxSize()
     ) {
-        items(movies, key = { it.id }) { movie ->
-            MovieCard(movie = movie, onClick = { onClick(movie) })
+        items(items, key = { it.id }) { s ->
+            SeriesCard(series = s, onClick = { onClick(s) })
         }
     }
 }
 
 @Composable
-private fun MovieCard(
-    movie: MovieUi,
+private fun SeriesCard(
+    series: SeriesUi,
     onClick: () -> Unit
 ) {
     Surface(
@@ -158,10 +154,9 @@ private fun MovieCard(
             .clickable { onClick() }
     ) {
         Column {
-            // Poster
             Image(
-                painter = rememberAsyncImagePainter(movie.posterUrl),
-                contentDescription = movie.title,
+                painter = rememberAsyncImagePainter(series.posterUrl),
+                contentDescription = series.title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
@@ -169,15 +164,15 @@ private fun MovieCard(
             )
             Column(Modifier.padding(10.dp)) {
                 Text(
-                    text = movie.title,
+                    text = series.title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 2
                 )
-                if (!movie.year.isNullOrBlank()) {
+                if (!series.year.isNullOrBlank()) {
                     Spacer(Modifier.height(2.dp))
                     Text(
-                        text = movie.year!!,
+                        text = series.year!!,
                         style = MaterialTheme.typography.bodySmall
                     )
                 }
@@ -200,4 +195,3 @@ private fun ErrorBox(message: String, onRetry: () -> Unit) {
         Button(onClick = onRetry) { Text("Tentar novamente") }
     }
 }
-```0
