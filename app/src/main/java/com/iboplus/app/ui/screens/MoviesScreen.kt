@@ -21,14 +21,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.iboplus.app.viewmodel.SeriesViewModel
-import com.iboplus.app.viewmodel.model.SeriesCategoryUi
-import com.iboplus.app.viewmodel.model.SeriesUi
+import com.iboplus.app.viewmodel.MoviesViewModel
+import com.iboplus.app.viewmodel.model.MovieCategoryUi
+import com.iboplus.app.viewmodel.model.MovieUi
 
 @Composable
-fun SeriesScreen(
-    vm: SeriesViewModel,
-    onOpen: (SeriesUi) -> Unit
+fun MoviesScreen(
+    vm: MoviesViewModel,
+    onOpen: (MovieUi) -> Unit
 ) {
     val ui by vm.state.collectAsState()
     var query by remember { mutableStateOf("") }
@@ -42,7 +42,7 @@ fun SeriesScreen(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(
-            text = "Séries",
+            text = "Filmes",
             style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold)
         )
 
@@ -54,14 +54,14 @@ fun SeriesScreen(
             },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("procurar série...") }
+            placeholder = { Text("procurar filme...") }
         )
 
         when {
             ui.loading -> LoadingBox()
 
             ui.error != null -> ErrorBox(
-                message = ui.error ?: "Erro ao carregar séries",
+                message = ui.error ?: "Erro ao carregar filmes",
                 onRetry = { vm.load() }
             )
 
@@ -72,8 +72,8 @@ fun SeriesScreen(
                     onClick = { id -> vm.selectCategory(id) }
                 )
 
-                SeriesGrid(
-                    items = ui.items,
+                MovieGrid(
+                    movies = ui.items,
                     onClick = onOpen,
                     modifier = Modifier.weight(1f)
                 )
@@ -93,7 +93,7 @@ private fun LoadingBox() {
 
 @Composable
 private fun CategoryRow(
-    categories: List<SeriesCategoryUi>,
+    categories: List<MovieCategoryUi>,
     selected: String?,
     onClick: (String) -> Unit
 ) {
@@ -107,8 +107,7 @@ private fun CategoryRow(
             colors = if (selected == null || selected == "all")
                 AssistChipDefaults.assistChipColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer
-                )
-            else AssistChipDefaults.assistChipColors()
+                ) else AssistChipDefaults.assistChipColors()
         )
         categories.forEach { cat ->
             AssistChip(
@@ -117,17 +116,16 @@ private fun CategoryRow(
                 colors = if (selected == cat.id)
                     AssistChipDefaults.assistChipColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
-                else AssistChipDefaults.assistChipColors()
+                    ) else AssistChipDefaults.assistChipColors()
             )
         }
     }
 }
 
 @Composable
-private fun SeriesGrid(
-    items: List<SeriesUi>,
-    onClick: (SeriesUi) -> Unit,
+private fun MovieGrid(
+    movies: List<MovieUi>,
+    onClick: (MovieUi) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
@@ -136,15 +134,15 @@ private fun SeriesGrid(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         modifier = modifier.fillMaxSize()
     ) {
-        items(items, key = { it.id }) { s ->
-            SeriesCard(series = s, onClick = { onClick(s) })
+        items(movies, key = { it.id }) { movie ->
+            MovieCard(movie = movie, onClick = { onClick(movie) })
         }
     }
 }
 
 @Composable
-private fun SeriesCard(
-    series: SeriesUi,
+private fun MovieCard(
+    movie: MovieUi,
     onClick: () -> Unit
 ) {
     Surface(
@@ -155,8 +153,8 @@ private fun SeriesCard(
     ) {
         Column {
             Image(
-                painter = rememberAsyncImagePainter(series.posterUrl),
-                contentDescription = series.title,
+                painter = rememberAsyncImagePainter(movie.posterUrl),
+                contentDescription = movie.title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp),
@@ -164,17 +162,14 @@ private fun SeriesCard(
             )
             Column(Modifier.padding(10.dp)) {
                 Text(
-                    text = series.title,
+                    text = movie.title,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 2
                 )
-                if (!series.year.isNullOrBlank()) {
+                movie.year?.takeIf { it.isNotBlank() }?.let {
                     Spacer(Modifier.height(2.dp))
-                    Text(
-                        text = series.year!!,
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                    Text(it, style = MaterialTheme.typography.bodySmall)
                 }
             }
         }
