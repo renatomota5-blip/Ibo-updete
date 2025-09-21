@@ -1,3 +1,4 @@
+
 pluginManagement {
     repositories {
         google()
@@ -12,5 +13,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Ibo-updete"
+rootProject.name = "IBOPlus"
 include(":app")
