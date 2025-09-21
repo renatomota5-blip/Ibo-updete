@@ -1,76 +1,44 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Permissões essenciais -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
-
-    <!-- Android 13+ permissões específicas -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-
-    <!-- Compatibilidade TV & Mobile (opcional) -->
-    <uses-feature android:name="android.software.leanback" android:required="false" />
     <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-
-    <!-- Visibilidade de players externos -->
-    <queries>
-        <package android:name="org.videolan.vlc" />
-        <package android:name="com.mxtech.videoplayer.ad" />
-        <package android:name="com.mxtech.videoplayer.pro" />
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:mimeType="video/*" />
-        </intent>
-    </queries>
+    <uses-feature android:name="android.software.leanback" android:required="false" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".App"
         android:allowBackup="true"
+        android:banner="@drawable/tv_banner"
         android:icon="@mipmap/ic_launcher"
-        android:label="IBO Plus"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.IboPlus">
+        android:usesCleartextTraffic="false"
+        android:theme="@style/Theme.IBOPlus">
+
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.iboplus.app.MainActivity"
             android:exported="true"
-            android:launchMode="singleTask"
-            android:resizeableActivity="true"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <!-- <category android:name="android.intent.category.LEANBACK_LAUNCHER" /> -->
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.live.LiveActivity"
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/backup_rules" />
+        </provider>
 
-        <activity
-            android:name=".ui.servers.ServersActivity"
-            android:exported="false"
-            android:configChanges="orientation|screenSize|smallestScreenSize|keyboardHidden|uiMode" />
-
-        <service
-            android:name=".player.MediaPlaybackService"
-            android:exported="false"
-            android:foregroundServiceType="mediaPlayback" />
-
-        <receiver
-            android:name=".player.MediaButtonReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
-            </intent-filter>
-        </receiver>
     </application>
 </manifest>
