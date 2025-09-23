@@ -10,5 +10,5 @@
         android:text="@string/movies"
         android:textColor="@color/tile_text"
         android:textSize="24sp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 </FrameLayout>
