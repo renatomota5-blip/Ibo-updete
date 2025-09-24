@@ -1,34 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Material 3 (claras) -->
-    <color name="md3_primary">#6750A4</color>
-    <color name="md3_onPrimary">#FFFFFF</color>
-    <color name="md3_secondary">#625B71</color>
-    <color name="md3_onSecondary">#FFFFFF</color>
-    <color name="md3_tertiary">#7D5260</color>
-    <color name="md3_onTertiary">#FFFFFF</color>
-    <color name="md3_surface">#FFFBFE</color>
-    <color name="md3_onSurface">#1C1B1F</color>
-    <color name="md3_surfaceVariant">#E7E0EC</color>
-    <color name="md3_outline">#79747E</color>
-
-    <!-- Aliases para compatibilidade -->
-    <color name="colorPrimary">@color/md3_primary</color>
-    <color name="colorOnPrimary">@color/md3_onPrimary</color>
-    <color name="colorSecondary">@color/md3_secondary</color>
-    <color name="colorOnSecondary">@color/md3_onSecondary</color>
-    <color name="colorTertiary">@color/md3_tertiary</color>
-    <color name="colorOnTertiary">@color/md3_onTertiary</color>
-    <color name="colorSurface">@color/md3_surface</color>
-    <color name="colorOnSurface">@color/md3_onSurface</color>
-    <color name="colorSurfaceVariant">@color/md3_surfaceVariant</color>
-    <color name="colorOutline">@color/md3_outline</color>
-
-    <!-- Pedidas pelos layouts/ícones -->
-    <color name="background">#000000</color>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-
-    <!-- *** COR QUE FALTAVA (corrige o erro) *** -->
-    <color name="ic_launcher_background">#000000</color>
+    <color name="bg_dark">#121212</color>
 </resources>
