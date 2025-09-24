@@ -14,7 +14,6 @@ android {
         versionCode = 1
         versionName = "0.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables { useSupportLibrary = true }
         resourceConfigurations += listOf("pt", "en")
     }
 
@@ -22,7 +21,6 @@ android {
         getByName("debug") {
             isMinifyEnabled = false
         }
-        // ✅ Corrigido: alterar o buildType existente em vez de criar outro
         getByName("release") {
             isMinifyEnabled = true
             proguardFiles(
@@ -46,20 +44,15 @@ android {
         }
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+    kotlinOptions { jvmTarget = "17" }
 }
 
 dependencies {
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.activity:activity-ktx:1.9.2")
     implementation("androidx.fragment:fragment-ktx:1.8.2")
-    implementation("androidx.leanback:leanback:1.1.0-rc02")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
