@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical" android:padding="24dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
-        <Button android:id="@+id/btnPanel"  android:text="Abrir Painel (WebView)"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <Button android:id="@+id/btnLive"   android:text="Canais (Live)"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
-        <Button android:id="@+id/btnMovies" android:text="Filmes (VOD)"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
-        <Button android:id="@+id/btnSeries" android:text="Séries (VOD)"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
-        <Button android:id="@+id/btnServers" android:text="Servidores"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
-        <Button android:id="@+id/btnSettings" android:text="Configurações"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp"/>
-    </LinearLayout>
-</ScrollView>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_home" />
