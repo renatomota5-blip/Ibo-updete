@@ -1,16 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.IboPlus" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Se quiser fixar cores explícitas (compat com refs antigas) -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorOnSecondary">@color/colorOnSecondary</item>
-        <item name="colorTertiary">@color/colorTertiary</item>
-        <item name="colorOnTertiary">@color/colorOnTertiary</item>
-        <item name="colorSurface">@color/colorSurface</item>
-        <item name="colorOnSurface">@color/colorOnSurface</item>
-        <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
-        <item name="colorOutline">@color/colorOutline</item>
+    <style name="Theme.IBOPlus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+    </style>
+
+    <!-- Tema do Splash: usa fundo ilustrado -->
+    <style name="Theme.IBOPlus.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 </resources>
